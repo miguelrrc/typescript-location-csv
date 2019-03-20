@@ -8,6 +8,7 @@ interface IAppState {
   readonly apartments: IApartment[]
   readonly priceSqmMean?: number
   readonly livingAreaSqmMean?: number
+  readonly loading: boolean
 }
 
 class App extends React.Component<any, IAppState> {
@@ -17,29 +18,38 @@ class App extends React.Component<any, IAppState> {
       apartments: [],
       priceSqmMean: undefined,
       livingAreaSqmMean: undefined,
+      loading: false,
     }
   }
 
   public componentDidMount() {
-    fetchApartments().then(apartments => this.setState({ apartments }))
+    this.setState({ loading: true })
+    fetchApartments().then(apartments => this.setState({ loading: false, apartments }))
   }
 
   public locationSelected = (latitude: number, longitude: number) => {
+    this.setState({ loading: true })
     fetchApartmentsLocation(latitude, longitude).then(median =>
       this.setState({
         apartments: median.apartments,
         priceSqmMean: median.priceSqmMean,
         livingAreaSqmMean: median.livingAreaSqmMean,
+        loading: false,
       }),
     )
   }
 
   public render() {
-    const { priceSqmMean, apartments } = this.state
+    const { priceSqmMean, apartments, loading } = this.state
+
+    if (loading) {
+      return <div>Loading</div>
+    }
+
     return (
       <div>
         {priceSqmMean && this.renderMean()}
-        <Table responsive>
+        <Table striped bordered hover>
           <thead>
             <tr>
               <th>#</th>
