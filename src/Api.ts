@@ -1,5 +1,4 @@
 const baseURL = 'http://localhost:5000/api'
-// const version = 'v0'
 
 export interface IResponse {
   apartments: IResponseApartment[]

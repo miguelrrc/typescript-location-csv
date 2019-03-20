@@ -24,19 +24,33 @@ class App extends React.Component<any, IAppState> {
 
   public componentDidMount() {
     this.setState({ loading: true })
-    fetchApartments().then(apartments => this.setState({ loading: false, apartments }))
+    fetchApartments()
+      .then(apartments => this.setState({ loading: false, apartments }))
+      .catch(e => {
+        if (process.env.NODE_ENV === 'development') {
+          console.log('error: ', e)
+        }
+        alert('Error fetching data')
+      })
   }
 
   public locationSelected = (latitude: number, longitude: number) => {
     this.setState({ loading: true })
-    fetchApartmentsLocation(latitude, longitude).then(median =>
-      this.setState({
-        apartments: median.apartments,
-        priceSqmMean: median.priceSqmMean,
-        livingAreaSqmMean: median.livingAreaSqmMean,
-        loading: false,
-      }),
-    )
+    fetchApartmentsLocation(latitude, longitude)
+      .then(median =>
+        this.setState({
+          apartments: median.apartments,
+          priceSqmMean: median.priceSqmMean,
+          livingAreaSqmMean: median.livingAreaSqmMean,
+          loading: false,
+        }),
+      )
+      .catch(e => {
+        if (process.env.NODE_ENV === 'development') {
+          console.log('error: ', e)
+        }
+        alert('Error fetching data')
+      })
   }
 
   public render() {
@@ -72,7 +86,7 @@ class App extends React.Component<any, IAppState> {
   private renderMean = () => (
     <div>
       <p>{`Price square meter average:  ${this.state.priceSqmMean} €`}</p>
-      <p>Living square meter average: {this.state.livingAreaSqmMean}</p>
+      <p>{`Living square meter average:  ${this.state.livingAreaSqmMean} sqm`}</p>
     </div>
   )
 }
