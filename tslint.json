@@ -1,0 +1,66 @@
+{
+  "extends": [
+    "tslint:recommended",
+    "tslint-config-prettier"
+  ],
+  "rulesDirectory": [
+    "tslint-plugin-prettier"
+  ],
+  "rules": {
+    "interface-name": false,
+    "interface-over-type-literal": false,
+    "jsx-no-lambda": false,
+    "max-classes-per-file": false,
+    "no-console": false,
+    "no-reference": false,
+    "no-var-requires": false,
+    "object-literal-sort-keys": false,
+    "semicolon": [
+      true,
+      "never"
+    ],
+    "indent": [
+      true,
+      "spaces",
+      2
+    ],
+    "quotemark": [
+      true,
+      "single",
+      "avoid-escape",
+      "avoid-template",
+      "jsx-double"
+    ],
+    "variable-name": [
+      true,
+      "ban-keywords",
+      "check-format",
+      "allow-leading-underscore",
+      "allow-pascal-case"
+    ],
+    "prettier": [
+      true,
+      {
+        "printWidth": 120,
+        "semi": false,
+        "singleQuote": true,
+        "jsxSingleQuote": false,
+        "trailingComma": "all",
+        "tabWidth": 2,
+        "useTabs": false,
+        "parser": "typescript"
+      }
+    ]
+  },
+  "linterOptions": {
+    "exclude": [
+      "bin/**/*",
+      "docs/**/*",
+      "fixtures/**/*",
+      "node_modules/**/*.ts",
+      "test/**/*",
+      "src/**/*.js",
+      "build/**/*"
+    ]
+  }
+}
